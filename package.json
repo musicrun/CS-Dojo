@@ -1,0 +1,8 @@
+{
+  "name": "reham-dojo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

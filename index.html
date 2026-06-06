@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <meta name="description" content="Revision Dojo - answer the CS HL Paper 1 combined mock and export your work for AI marking.">
+  <title>Revision Dojo | CS HL Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Pirata+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="regular">
+  <div class="ash" aria-hidden="true"></div>
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">Computer Science HL · Paper I</p>
+      <h1 id="site-name">Revision Dojo</h1>
+      <p class="subtitle" id="site-subtitle">Computer Science HL Practice</p>
+    </div>
+    <div class="header-actions">
+      <button class="button mode-button" id="theme-toggle" type="button">Reham Mode</button>
+      <button class="button button-ghost" id="reset-button" type="button">Burn All Answers</button>
+      <button class="button button-primary" id="export-button" type="button">Export for Judgment</button>
+    </div>
+  </header>
+
+  <section class="progress-panel" aria-label="Paper progress">
+    <div class="progress-copy">
+      <span id="progress-count">0 / 58 answered</span>
+      <span id="progress-marks">0 / 145 marks attempted</span>
+    </div>
+    <div class="progress-track" aria-hidden="true"><div id="progress-bar"></div></div>
+  </section>
+
+  <main class="exam-layout">
+    <aside class="question-rail" aria-label="Question navigation">
+      <div class="rail-heading">
+        <div>
+          <p class="eyebrow rail-eyebrow" id="nav-label">Paper Navigator</p>
+          <h2>Questions</h2>
+        </div>
+        <button class="rail-toggle" id="rail-toggle" type="button" aria-expanded="false" aria-controls="question-list">Open</button>
+      </div>
+      <div class="section-tabs" role="group" aria-label="Filter questions">
+        <button class="section-tab active" type="button" data-section="all">All</button>
+        <button class="section-tab" type="button" data-section="A">Section A</button>
+        <button class="section-tab" type="button" data-section="B">Section B</button>
+      </div>
+      <nav id="question-list"></nav>
+    </aside>
+
+    <article class="answer-chamber" aria-live="polite">
+      <div class="chamber-topline">
+        <span id="section-label">Section A</span>
+        <span id="source-label"></span>
+      </div>
+      <div class="question-title-row">
+        <h2 id="question-label">Question 1</h2>
+        <span class="marks-seal" id="marks-label">1 mark</span>
+      </div>
+      <p class="scenario" id="scenario" hidden></p>
+      <p class="prompt" id="prompt"></p>
+
+      <label class="answer-label" for="answer">
+        Your answer
+        <span class="save-state" id="save-state" role="status">Saved in the ashes</span>
+      </label>
+      <textarea id="answer" spellcheck="true" placeholder="Write your answer here..."></textarea>
+
+      <footer class="question-controls">
+        <button class="button button-ghost" id="previous-button" type="button">← Previous</button>
+        <span id="position-label">Part 1 of 58</span>
+        <button class="button button-next" id="next-button" type="button">Next →</button>
+      </footer>
+    </article>
+  </main>
+
+  <dialog id="reset-dialog">
+    <div class="dialog-inner">
+      <p class="eyebrow">Point of No Return</p>
+      <h2>Burn every answer?</h2>
+      <p>This permanently clears all locally saved work for this paper.</p>
+      <div class="dialog-actions">
+        <button class="button button-ghost" id="cancel-reset" type="button">Keep My Work</button>
+        <button class="button button-danger" id="confirm-reset" type="button">Yes, Burn It</button>
+      </div>
+    </div>
+  </dialog>
+
+  <noscript>Reham Dojo requires JavaScript to save and export answers.</noscript>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
