@@ -7,6 +7,7 @@ import {
   questionLabel,
 } from "./state.js";
 import { getThemeView, normalizeTheme, toggleTheme } from "./theme.js";
+import { changedAnswerState } from "./performance.js";
 
 const STORAGE_KEY = "reham-dojo-paper-1-v1";
 const THEME_KEY = "cs-dojo-theme-v1";
@@ -25,10 +26,12 @@ let state = parseStoredState(localStorage.getItem(STORAGE_KEY), questions);
 let theme = normalizeTheme(localStorage.getItem(THEME_KEY));
 let activeFilter = "all";
 let saveTimer;
+let progressFrame;
+const questionIndexById = new Map(questions.map((question, index) => [question.id, index]));
+const totalMarks = questions.reduce((sum, question) => sum + question.marks, 0);
 
 function currentIndex() {
-  const index = questions.findIndex(({ id }) => id === state.currentId);
-  return index < 0 ? 0 : index;
+  return questionIndexById.get(state.currentId) ?? 0;
 }
 
 function persist() {
@@ -52,10 +55,23 @@ function applyTheme() {
 }
 
 function renderProgress() {
-  const progress = getProgress(questions, state.answers);
+  const progress = getProgress(questions, state.answers, totalMarks);
   elements["progress-count"].textContent = `${progress.answered} / ${progress.total} answered`;
   elements["progress-marks"].textContent = `${progress.answeredMarks} / ${progress.totalMarks} marks attempted`;
   elements["progress-bar"].style.width = `${progress.percent}%`;
+}
+
+function scheduleProgressRender() {
+  if (progressFrame) return;
+  progressFrame = requestAnimationFrame(() => {
+    progressFrame = null;
+    renderProgress();
+  });
+}
+
+function updateCurrentRailState(answered) {
+  const button = elements["question-list"].querySelector(`[data-id="${state.currentId}"]`);
+  if (button) button.classList.toggle("answered", answered);
 }
 
 function renderRail() {
@@ -130,10 +146,13 @@ function downloadExport() {
 }
 
 elements.answer.addEventListener("input", () => {
+  const previousAnswer = state.answers[state.currentId] || "";
   state.answers[state.currentId] = elements.answer.value;
   elements["save-state"].textContent = "Binding answer...";
-  renderProgress();
-  renderRail();
+  scheduleProgressRender();
+  if (changedAnswerState(previousAnswer, elements.answer.value)) {
+    updateCurrentRailState(Boolean(elements.answer.value.trim()));
+  }
   clearTimeout(saveTimer);
   saveTimer = setTimeout(persist, 250);
 });
@@ -173,6 +192,9 @@ document.addEventListener("keydown", (event) => {
   if (event.altKey && event.key === "ArrowRight") move(1);
 });
 window.addEventListener("beforeunload", persist);
+document.addEventListener("visibilitychange", () => {
+  document.body.classList.toggle("page-hidden", document.hidden);
+});
 
 applyTheme();
 renderQuestion();

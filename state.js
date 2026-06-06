@@ -27,9 +27,9 @@ export function parseStoredState(raw, questions) {
   }
 }
 
-export function getProgress(questions, answers) {
+export function getProgress(questions, answers, knownTotalMarks) {
   const completed = questions.filter(({ id }) => answers[id]?.trim());
-  const totalMarks = questions.reduce((sum, { marks }) => sum + marks, 0);
+  const totalMarks = knownTotalMarks ?? questions.reduce((sum, { marks }) => sum + marks, 0);
   return {
     answered: completed.length,
     total: questions.length,
