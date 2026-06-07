@@ -1,16 +1,17 @@
-import { questions } from "./questions.js";
+import { questions } from "./questions.js?v=20260607-dark";
 import {
   buildTextExport,
   createInitialState,
   getProgress,
   parseStoredState,
   questionLabel,
-} from "./state.js";
-import { getThemeView, normalizeTheme, toggleTheme } from "./theme.js";
-import { changedAnswerState } from "./performance.js";
+} from "./state.js?v=20260607-dark";
+import { getThemeView, normalizeColorMode, normalizeTheme, toggleDarkMode, toggleTheme } from "./theme.js?v=20260607-dark";
+import { changedAnswerState } from "./performance.js?v=20260607-dark";
 
 const STORAGE_KEY = "cs-dojo-paper-2-v1";
 const THEME_KEY = "cs-dojo-theme-v1";
+const COLOR_MODE_KEY = "cs-dojo-color-mode-v1";
 const elements = Object.fromEntries(
   [
     "answer", "cancel-reset", "confirm-reset", "export-button", "marks-label",
@@ -18,12 +19,13 @@ const elements = Object.fromEntries(
     "progress-count", "progress-marks", "prompt", "question-label",
     "question-list", "rail-toggle", "reset-button", "reset-dialog",
     "save-state", "scenario", "section-label", "source-label",
-    "site-name", "site-subtitle", "theme-toggle", "nav-label",
+    "site-name", "site-subtitle", "theme-toggle", "dark-toggle", "nav-label",
   ].map((id) => [id, document.getElementById(id)]),
 );
 
 let state = parseStoredState(localStorage.getItem(STORAGE_KEY), questions);
 let theme = normalizeTheme(localStorage.getItem(THEME_KEY));
+let colorMode = normalizeColorMode(localStorage.getItem(COLOR_MODE_KEY));
 let activeFilter = "all";
 let saveTimer;
 let progressFrame;
@@ -40,13 +42,15 @@ function persist() {
 }
 
 function applyTheme() {
-  const view = getThemeView(theme);
+  const view = getThemeView(theme, colorMode);
   document.body.dataset.theme = theme;
-  document.documentElement.style.colorScheme = theme === "reham" ? "dark" : "light";
-  document.querySelector('meta[name="theme-color"]').content = theme === "reham" ? "#100604" : "#f4f7fb";
+  document.body.dataset.colorMode = colorMode;
+  document.documentElement.style.colorScheme = theme === "reham" || colorMode === "dark" ? "dark" : "light";
+  document.querySelector('meta[name="theme-color"]').content = theme === "reham" ? "#100604" : colorMode === "dark" ? "#101827" : "#f4f7fb";
   elements["site-name"].textContent = view.siteName;
   elements["site-subtitle"].textContent = view.subtitle;
   elements["theme-toggle"].textContent = view.toggleLabel;
+  elements["dark-toggle"].textContent = view.darkToggleLabel;
   elements["reset-button"].textContent = view.resetLabel;
   elements["export-button"].textContent = view.exportLabel;
   elements["nav-label"].textContent = view.navLabel;
@@ -165,6 +169,11 @@ elements["export-button"].addEventListener("click", downloadExport);
 elements["theme-toggle"].addEventListener("click", () => {
   theme = toggleTheme(theme);
   localStorage.setItem(THEME_KEY, theme);
+  applyTheme();
+});
+elements["dark-toggle"].addEventListener("click", () => {
+  colorMode = toggleDarkMode(colorMode);
+  localStorage.setItem(COLOR_MODE_KEY, colorMode);
   applyTheme();
 });
 elements["reset-button"].addEventListener("click", () => elements["reset-dialog"].showModal());
