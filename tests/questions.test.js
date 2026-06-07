@@ -2,11 +2,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { questions } from "../questions.js";
 
-test("paper data contains every answerable part and mark", () => {
-  assert.equal(questions.length, 58);
-  assert.equal(questions.reduce((sum, question) => sum + question.marks, 0), 145);
+test("paper 2 data contains every answerable part and mark", () => {
+  assert.equal(questions.length, 67);
+  assert.equal(questions.reduce((sum, question) => sum + question.marks, 0), 176);
   assert.equal(new Set(questions.map(({ id }) => id)).size, questions.length);
-  assert.deepEqual(new Set(questions.map(({ section }) => section)), new Set(["A", "B"]));
+  assert.deepEqual(new Set(questions.map(({ section }) => section)), new Set(["Paper 2"]));
 });
 
 test("every question has the fields needed by the interface and export", () => {

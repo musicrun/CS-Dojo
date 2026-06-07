@@ -125,7 +125,7 @@ h1 {
 .rail-heading { display: flex; justify-content: space-between; align-items: center; }
 .rail-heading h2 { margin: 0; font: 2rem var(--display); color: #f1d4af; }
 .rail-toggle { display: none; color: var(--gold); background: transparent; }
-.section-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 15px 0; }
+.section-tabs { display: grid; grid-template-columns: 1fr; gap: 4px; margin: 15px 0; }
 .section-tab { padding: 7px 3px; color: var(--muted); background: #110604; border-bottom: 1px solid transparent; font-size: .75rem; }
 .section-tab.active { color: var(--ember); border-color: var(--ember); }
 #question-list { overflow-y: auto; max-height: calc(100vh - 300px); padding-right: 5px; scrollbar-color: var(--blood-bright) transparent; }
@@ -168,7 +168,7 @@ h1 {
 .question-title-row { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 22px; }
 .question-title-row h2 { margin: 0; color: #f3d8b5; font: clamp(2.8rem, 5vw, 5.5rem)/.9 var(--display); }
 .marks-seal { display: grid; place-items: center; min-width: 72px; min-height: 72px; color: var(--gold); border: 1px solid var(--gold); border-radius: 50%; transform: rotate(4deg); }
-.scenario { position: relative; margin: 30px 0 16px; padding: 18px 20px; color: #c7ae94; border-left: 2px solid var(--blood-bright); background: rgba(77, 12, 8, .18); font-style: italic; line-height: 1.55; }
+.scenario { position: relative; margin: 30px 0 16px; padding: 18px 20px; color: #c7ae94; border-left: 2px solid var(--blood-bright); background: rgba(77, 12, 8, .18); font-style: italic; line-height: 1.55; white-space: pre-wrap; }
 .prompt { position: relative; max-width: 960px; margin: 26px 0 38px; color: #fff1db; font-size: clamp(1.25rem, 2.1vw, 1.8rem); line-height: 1.42; }
 .answer-label { display: flex; justify-content: space-between; margin-bottom: 9px; color: var(--gold); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
 .save-state { color: #7f6858; letter-spacing: .04em; text-transform: none; }

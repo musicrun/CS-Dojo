@@ -49,8 +49,8 @@ export function questionLabel(question) {
 export function buildTextExport(questions, answers) {
   const lines = [
     "REHAM DOJO",
-    "Computer Science Higher Level - Paper 1",
-    "Combined Revision Mock - Theme A",
+    "Computer Science Higher Level - Paper 2",
+    "Object-Oriented Programming, ADTs and Computational Thinking",
     "AI MARKING COPY",
     "=".repeat(64),
     "",
@@ -60,7 +60,7 @@ export function buildTextExport(questions, answers) {
   for (const question of questions) {
     if (question.section !== activeSection) {
       activeSection = question.section;
-      lines.push(`SECTION ${activeSection}`, "-".repeat(64), "");
+      lines.push(activeSection.toUpperCase(), "-".repeat(64), "");
     }
     lines.push(
       `${questionLabel(question).toUpperCase()} [${question.marks} ${question.marks === 1 ? "mark" : "marks"}]`,

@@ -45,6 +45,7 @@ test("progress counts only non-empty answers", () => {
 
 test("export contains full questions, scenarios, marks, and missing answer labels", () => {
   const text = buildTextExport(sampleQuestions, { q1: "A processing unit." });
+  assert.match(text, /Computer Science Higher Level - Paper 2/);
   assert.match(text, /QUESTION 1 \[1 mark\]/);
   assert.match(text, /Define a core\./);
   assert.match(text, /ANSWER:\nA processing unit\./);

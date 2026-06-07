@@ -9,7 +9,7 @@ import {
 import { getThemeView, normalizeTheme, toggleTheme } from "./theme.js";
 import { changedAnswerState } from "./performance.js";
 
-const STORAGE_KEY = "reham-dojo-paper-1-v1";
+const STORAGE_KEY = "cs-dojo-paper-2-v1";
 const THEME_KEY = "cs-dojo-theme-v1";
 const elements = Object.fromEntries(
   [
@@ -140,7 +140,7 @@ function downloadExport() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "reham-dojo-paper-1-answers.txt";
+  link.download = "cs-dojo-paper-2-answers.txt";
   link.click();
   URL.revokeObjectURL(url);
 }
